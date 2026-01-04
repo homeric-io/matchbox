@@ -1,7 +1,7 @@
 syntax = "proto3";
 package storagepb;
 
-option go_package = "github.com/poseidon/matchbox/matchbox/storage/storagepb";
+option go_package = "github.com/aalaesar/matchbox/matchbox/storage/storagepb";
 
 // Group selects one or more machines and matches them to a Profile.
 message Group {

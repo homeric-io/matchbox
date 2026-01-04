@@ -2,9 +2,9 @@ export CGO_ENABLED:=0
 
 DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 VERSION=$(shell git describe --tags --match=v* --always --dirty)
-LD_FLAGS="-w -X github.com/poseidon/matchbox/matchbox/version.Version=$(VERSION)"
+LD_FLAGS="-w -X github.com/aalaesar/matchbox/matchbox/version.Version=$(VERSION)"
 
-REPO=github.com/poseidon/matchbox
+REPO=github.com/aalaesar/matchbox
 LOCAL_REPO=poseidon/matchbox
 IMAGE_REPO=quay.io/poseidon/matchbox
 

@@ -3,9 +3,9 @@ package rpc
 import (
 	"golang.org/x/net/context"
 
-	"github.com/poseidon/matchbox/matchbox/rpc/rpcpb"
-	"github.com/poseidon/matchbox/matchbox/server"
-	pb "github.com/poseidon/matchbox/matchbox/server/serverpb"
+	"github.com/aalaesar/matchbox/matchbox/rpc/rpcpb"
+	"github.com/aalaesar/matchbox/matchbox/server"
+	pb "github.com/aalaesar/matchbox/matchbox/server/serverpb"
 )
 
 // genericServer takes a matchbox Server and implements a gRPC GenericServer.

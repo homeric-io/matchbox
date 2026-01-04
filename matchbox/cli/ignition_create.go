@@ -8,7 +8,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	pb "github.com/poseidon/matchbox/matchbox/server/serverpb"
+	pb "github.com/aalaesar/matchbox/matchbox/server/serverpb"
 )
 
 // ignitionPutCmd creates and updates Ignition templates.

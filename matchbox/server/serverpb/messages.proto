@@ -3,7 +3,7 @@ package serverpb;
 
 import "matchbox/storage/storagepb/storage.proto";
 
-option go_package = "github.com/poseidon/matchbox/matchbox/server/serverpb";
+option go_package = "github.com/aalaesar/matchbox/matchbox/server/serverpb";
 
 // Selects
 

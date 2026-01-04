@@ -3,7 +3,7 @@ package rpcpb;
 
 import "matchbox/server/serverpb/messages.proto";
 
-option go_package = "github.com/poseidon/matchbox/matchbox/rpc/rpcpb";
+option go_package = "github.com/aalaesar/matchbox/matchbox/rpc/rpcpb";
 
 service Groups {
   // Create a Group.

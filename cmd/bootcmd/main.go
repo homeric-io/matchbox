@@ -1,6 +1,6 @@
 package main
 
-import "github.com/poseidon/matchbox/matchbox/cli"
+import "github.com/aalaesar/matchbox/matchbox/cli"
 
 func main() {
 	cli.Execute()

@@ -1,6 +1,6 @@
 [Unit]
 Description=Matchbox Server
-Documentation=https://github.com/poseidon/matchbox
+Documentation=https://github.com/aalaesar/matchbox
 
 [Service]
 User=matchbox
