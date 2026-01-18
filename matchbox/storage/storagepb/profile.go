@@ -1,7 +1,7 @@
 package storagepb
 
 import (
-	"encoding/json"
+    "google.golang.org/protobuf/encoding/protojson"
 	"errors"
 )
 
@@ -12,7 +12,7 @@ var (
 // ParseProfile parses bytes into a Profile.
 func ParseProfile(data []byte) (*Profile, error) {
 	profile := new(Profile)
-	err := json.Unmarshal(data, profile)
+	err := protojson.Unmarshal(data, profile)
 	return profile, err
 }
 
@@ -27,14 +27,30 @@ func (p *Profile) AssertValid() error {
 }
 
 func (p *Profile) Copy() *Profile {
-	return &Profile{
+	if p == nil {
+		return nil
+	}
+
+	cp := &Profile{
 		Id:         p.Id,
 		Name:       p.Name,
 		IgnitionId: p.IgnitionId,
 		CloudId:    p.CloudId,
 		GenericId:  p.GenericId,
-		Boot:       p.Boot.Copy(),
 	}
+
+	switch v := p.GetBootMode().(type) {
+	case *Profile_Boot:
+		cp.BootMode = &Profile_Boot{
+			Boot: v.Boot.Copy(),
+		}
+	case *Profile_Chain:
+		cp.BootMode = &Profile_Chain{
+			Chain: v.Chain,
+		}
+	}
+
+	return cp
 }
 
 func (b *NetBoot) Copy() *NetBoot {

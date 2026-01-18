@@ -6,6 +6,8 @@ import (
 	"text/template"
 
 	"github.com/sirupsen/logrus"
+	"github.com/aalaesar/matchbox/matchbox/storage/storagepb"
+	"errors"
 )
 
 var grubTemplate = template.Must(template.New("GRUB2 config").Parse(`default=0
@@ -46,7 +48,12 @@ func (s *Server) grubHandler() http.Handler {
 		}).Debug("Matched a GRUB config")
 
 		var buf bytes.Buffer
-		err = grubTemplate.Execute(&buf, profile.Boot)
+		switch v := profile.GetBootMode().(type) {
+			case *storagepb.Profile_Boot:
+				err = grubTemplate.Execute(&buf, v.Boot)
+			case *storagepb.Profile_Chain:
+				err = errors.New("Chain boot mode not supported for grub http api")
+			}
 		if err != nil {
 			s.logger.Errorf("error rendering template: %v", err)
 			http.NotFound(w, req)

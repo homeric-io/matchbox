@@ -27,8 +27,13 @@ message Profile {
   string ignition_id = 3;
   // cloud config id
   string cloud_id = 4;
+
+  oneof boot_mode {
   // support network boot / PXE
-  NetBoot boot = 5;
+    NetBoot boot = 5;
+  // the url of the next bootloader
+    string chain = 7;
+    }
   // generic config id
   string generic_id = 6;
 }
