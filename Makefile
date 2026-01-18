@@ -2,18 +2,18 @@ export CGO_ENABLED:=0
 
 DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 VERSION=$(shell git describe --tags --match=v* --always --dirty)
-LD_FLAGS="-w -X github.com/aalaesar/matchbox/matchbox/version.Version=$(VERSION)"
+LD_FLAGS="-w -X github.com/homeric-io/tinm/tinm/version.Version=$(VERSION)"
 
-REPO=github.com/aalaesar/matchbox
-LOCAL_REPO=poseidon/matchbox
-IMAGE_REPO=quay.io/poseidon/matchbox
+REPO=github.com/homeric-io/tinm
+LOCAL_REPO=homeric-io/tinm
+IMAGE_REPO=docker.io/aalaesar/tinm
 
 .PHONY: all
 all: build test vet fmt
 
 .PHONY: build
 build:
-	@go build -o bin/matchbox -ldflags $(LD_FLAGS) $(REPO)/cmd/matchbox
+	@go build -o bin/tinm -ldflags $(LD_FLAGS) $(REPO)/cmd/tinm
 
 .PHONY: test
 test:
@@ -65,9 +65,9 @@ protoc/%:
 		--go_out=plugins=grpc,paths=source_relative:. $*
 
 codegen: \
-	protoc/matchbox/storage/storagepb/*.proto \
-	protoc/matchbox/server/serverpb/*.proto \
-	protoc/matchbox/rpc/rpcpb/*.proto
+	protoc/tinm/storage/storagepb/*.proto \
+	protoc/tinm/server/serverpb/*.proto \
+	protoc/tinm/rpc/rpcpb/*.proto
 
 clean:
 	@rm -rf bin
@@ -78,41 +78,41 @@ clean-release:
 release: \
 	clean \
 	clean-release \
-	_output/matchbox-linux-amd64.tar.gz \
-	_output/matchbox-linux-arm.tar.gz \
-	_output/matchbox-linux-arm64.tar.gz \
-	_output/matchbox-darwin-amd64.tar.gz \
-	_output/matchbox-darwin-arm64.tar.gz
+	_output/tinm-linux-amd64.tar.gz \
+	_output/tinm-linux-arm.tar.gz \
+	_output/tinm-linux-arm64.tar.gz \
+	_output/tinm-darwin-amd64.tar.gz \
+	_output/tinm-darwin-arm64.tar.gz
 
-bin/linux-amd64/matchbox: GOARGS = GOOS=linux GOARCH=amd64
-bin/linux-arm/matchbox: GOARGS = GOOS=linux GOARCH=arm GOARM=6
-bin/linux-arm64/matchbox: GOARGS = GOOS=linux GOARCH=arm64
-bin/darwin-amd64/matchbox: GOARGS = GOOS=darwin GOARCH=amd64
-bin/darwin-arm64/matchbox: GOARGS = GOOS=darwin GOARCH=arm64
-bin/linux-ppc64le/matchbox: GOARGS = GOOS=linux GOARCH=ppc64le
+bin/linux-amd64/tinm: GOARGS = GOOS=linux GOARCH=amd64
+bin/linux-arm/tinm: GOARGS = GOOS=linux GOARCH=arm GOARM=6
+bin/linux-arm64/tinm: GOARGS = GOOS=linux GOARCH=arm64
+bin/darwin-amd64/tinm: GOARGS = GOOS=darwin GOARCH=amd64
+bin/darwin-arm64/tinm: GOARGS = GOOS=darwin GOARCH=arm64
+bin/linux-ppc64le/tinm: GOARGS = GOOS=linux GOARCH=ppc64le
 
-bin/%/matchbox:
-	$(GOARGS) go build -o $@ -ldflags $(LD_FLAGS) -a $(REPO)/cmd/matchbox
+bin/%/tinm:
+	$(GOARGS) go build -o $@ -ldflags $(LD_FLAGS) -a $(REPO)/cmd/tinm
 
-_output/matchbox-%.tar.gz: NAME=matchbox-$(VERSION)-$*
-_output/matchbox-%.tar.gz: DEST=_output/$(NAME)
-_output/matchbox-%.tar.gz: bin/%/matchbox
+_output/tinm-%.tar.gz: NAME=tinm-$(VERSION)-$*
+_output/tinm-%.tar.gz: DEST=_output/$(NAME)
+_output/tinm-%.tar.gz: bin/%/tinm
 	mkdir -p $(DEST)
-	cp bin/$*/matchbox $(DEST)
+	cp bin/$*/tinm $(DEST)
 	./scripts/dev/release-files $(DEST)
 	tar zcvf $(DEST).tar.gz -C _output $(NAME)
 
 .PHONY: all build clean test release
-.SECONDARY: _output/matchbox-linux-amd64 _output/matchbox-darwin-amd64
+.SECONDARY: _output/tinm-linux-amd64 _output/tinm-darwin-amd64
 
 release-sign:
-	gpg2 --armor --detach-sign _output/matchbox-$(VERSION)-linux-amd64.tar.gz
-	gpg2 --armor --detach-sign _output/matchbox-$(VERSION)-linux-arm.tar.gz
-	gpg2 --armor --detach-sign _output/matchbox-$(VERSION)-linux-arm64.tar.gz
-	gpg2 --armor --detach-sign _output/matchbox-$(VERSION)-darwin-amd64.tar.gz
-	gpg2 --armor --detach-sign _output/matchbox-$(VERSION)-darwin-arm64.tar.gz
+	gpg2 --armor --detach-sign _output/tinm-$(VERSION)-linux-amd64.tar.gz
+	gpg2 --armor --detach-sign _output/tinm-$(VERSION)-linux-arm.tar.gz
+	gpg2 --armor --detach-sign _output/tinm-$(VERSION)-linux-arm64.tar.gz
+	gpg2 --armor --detach-sign _output/tinm-$(VERSION)-darwin-amd64.tar.gz
+	gpg2 --armor --detach-sign _output/tinm-$(VERSION)-darwin-arm64.tar.gz
 
-release-verify: NAME=_output/matchbox
+release-verify: NAME=_output/tinm
 release-verify:
 	gpg2 --verify $(NAME)-$(VERSION)-linux-amd64.tar.gz.asc $(NAME)-$(VERSION)-linux-amd64.tar.gz
 	gpg2 --verify $(NAME)-$(VERSION)-linux-arm.tar.gz.asc $(NAME)-$(VERSION)-linux-arm.tar.gz

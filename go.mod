@@ -1,4 +1,4 @@
-module github.com/aalaesar/matchbox
+module github.com/homeric-io/tinm
 
 go 1.24.0
 

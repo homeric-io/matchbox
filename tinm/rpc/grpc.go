@@ -1,0 +1,28 @@
+package rpc
+
+import (
+	"crypto/tls"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
+
+	"github.com/homeric-io/tinm/tinm/rpc/rpcpb"
+	"github.com/homeric-io/tinm/tinm/server"
+)
+
+// NewServer wraps the tinm Server to return a new gRPC Server.
+func NewServer(s server.Server, tls *tls.Config) *grpc.Server {
+	var opts []grpc.ServerOption
+	if tls != nil {
+		// Add TLS Credentials as a ServerOption for server connections.
+		opts = append(opts, grpc.Creds(credentials.NewTLS(tls)))
+	}
+
+	grpcServer := grpc.NewServer(opts...)
+	rpcpb.RegisterGroupsServer(grpcServer, newGroupServer(s))
+	rpcpb.RegisterProfilesServer(grpcServer, newProfileServer(s))
+	rpcpb.RegisterSelectServer(grpcServer, newSelectServer(s))
+	rpcpb.RegisterIgnitionServer(grpcServer, newIgnitionServer(s))
+	rpcpb.RegisterGenericServer(grpcServer, newGenericServer(s))
+	return grpcServer
+}
