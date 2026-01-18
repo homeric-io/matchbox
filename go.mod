@@ -1,4 +1,4 @@
-module github.com/poseidon/matchbox
+module github.com/aalaesar/matchbox
 
 go 1.24.0
 

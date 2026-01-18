@@ -6,8 +6,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	pb "github.com/poseidon/matchbox/matchbox/server/serverpb"
-	"github.com/poseidon/matchbox/matchbox/storage/storagepb"
+	pb "github.com/aalaesar/matchbox/matchbox/server/serverpb"
+	"github.com/aalaesar/matchbox/matchbox/storage/storagepb"
 )
 
 // profilePutCmd creates and updates Profiles.

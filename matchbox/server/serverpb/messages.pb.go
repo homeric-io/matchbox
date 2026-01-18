@@ -6,7 +6,7 @@ package serverpb
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	storagepb "github.com/poseidon/matchbox/matchbox/storage/storagepb"
+	storagepb "github.com/aalaesar/matchbox/matchbox/storage/storagepb"
 	math "math"
 )
 

@@ -9,8 +9,8 @@ import (
 	cloudinit "github.com/coreos/coreos-cloudinit/config"
 	"github.com/sirupsen/logrus"
 
-	"github.com/poseidon/matchbox/matchbox/server"
-	pb "github.com/poseidon/matchbox/matchbox/server/serverpb"
+	"github.com/aalaesar/matchbox/matchbox/server"
+	pb "github.com/aalaesar/matchbox/matchbox/server/serverpb"
 )
 
 // CloudConfig defines a cloud-init config.
@@ -21,7 +21,7 @@ type CloudConfig struct {
 // cloudHandler returns a handler that responds with the cloud config matching
 // the request.
 // DEPRECATED: Please migrate to using Container Linux configs.
-// https://github.com/poseidon/matchbox/blob/master/Documentation/cloud-config.md
+// https://github.com/aalaesar/matchbox/blob/master/Documentation/cloud-config.md
 func (s *Server) cloudHandler(core server.Server) http.Handler {
 	fn := func(w http.ResponseWriter, req *http.Request) {
 		ctx := req.Context()

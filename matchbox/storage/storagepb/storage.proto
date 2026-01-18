@@ -1,7 +1,7 @@
 syntax = "proto3";
 package storagepb;
 
-option go_package = "github.com/poseidon/matchbox/matchbox/storage/storagepb";
+option go_package = "github.com/aalaesar/matchbox/matchbox/storage/storagepb";
 
 // Group selects one or more machines and matches them to a Profile.
 message Group {
@@ -27,8 +27,13 @@ message Profile {
   string ignition_id = 3;
   // cloud config id
   string cloud_id = 4;
+
+  oneof boot_mode {
   // support network boot / PXE
-  NetBoot boot = 5;
+    NetBoot boot = 5;
+  // the url of the next bootloader
+    string chain = 7;
+    }
   // generic config id
   string generic_id = 6;
 }

@@ -6,8 +6,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
-	"github.com/poseidon/matchbox/matchbox/rpc/rpcpb"
-	"github.com/poseidon/matchbox/matchbox/server"
+	"github.com/aalaesar/matchbox/matchbox/rpc/rpcpb"
+	"github.com/aalaesar/matchbox/matchbox/server"
 )
 
 // NewServer wraps the matchbox Server to return a new gRPC Server.

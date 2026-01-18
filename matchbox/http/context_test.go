@@ -6,7 +6,7 @@ import (
 	"context"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/poseidon/matchbox/matchbox/storage/storagepb"
+	"github.com/aalaesar/matchbox/matchbox/storage/storagepb"
 )
 
 func TestContextProfile(t *testing.T) {

@@ -5,7 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/poseidon/matchbox/matchbox/storage/storagepb"
+	"google.golang.org/protobuf/encoding/protojson"
+	"github.com/aalaesar/matchbox/matchbox/storage/storagepb"
 	"github.com/sirupsen/logrus"
 )
 
@@ -82,7 +83,10 @@ func (s *fileStore) GroupList() ([]*storagepb.Group, error) {
 
 // ProfilePut writes the given Profile.
 func (s *fileStore) ProfilePut(profile *storagepb.Profile) error {
-	data, err := json.MarshalIndent(profile, "", "\t")
+	data, err := protojson.MarshalOptions{
+		Multiline: true,
+		Indent:    "\t",
+	}.Marshal(profile)
 	if err != nil {
 		return err
 	}
@@ -96,7 +100,7 @@ func (s *fileStore) ProfileGet(id string) (*storagepb.Profile, error) {
 		return nil, err
 	}
 	profile := new(storagepb.Profile)
-	err = json.Unmarshal(data, profile)
+	err = protojson.Unmarshal(data, profile)
 	if err != nil {
 		return nil, err
 	}

@@ -7,7 +7,7 @@ import (
 	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	serverpb "github.com/poseidon/matchbox/matchbox/server/serverpb"
+	serverpb "github.com/aalaesar/matchbox/matchbox/server/serverpb"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
